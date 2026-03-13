@@ -10,3 +10,5 @@ application.properties
 .idea/
 *.iml
 .vscode/
+application-dev.properties
+application-uat.properties

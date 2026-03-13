@@ -160,6 +160,48 @@ This project uses modern programmatic Java Configuration for Spring rather than 
 
 ---
 
+## 🌍 Environment & Branch Management
+
+To keep development, testing, and production data separate, we mirror our Git branch strategy with our Neon Database branch strategy.
+
+### 1. Git Branching Strategy
+* **`main` branch:** Represents the **Production** environment. Only fully tested and reviewed code merges here.
+* **`uat` branch:** Represents the **Staging / Pre-Prod** environment. Used for final QA and testing features before they go to real users.
+* **`dev` branch:** Represents the **Development** environment. Active integration happens here.
+* **`feature/<name>` branches:** Created off `dev` for specific tasks (e.g., `feature/ai-integration`).
+
+### 2. Neon Database Environments
+Neon supports branching the database exactly like Git. You don't need to provision a separate heavy server; you instantly branch the schema and data. We have created corresponding databases for each stage.
+
+**Our environments are:**
+* **`main`**: Production Data
+* **`uat`**: Pre-Prod Data
+* **`dev`**: Developer Data
+
+### 3. Application Configuration
+We have configured `JpaConfig.java` to support multiple environments natively in pure Spring Framework:
+
+1. **Local / Dev / UAT (Properties File):** 
+   You can create environment-specific properties files. We use `application-dev.properties` for development and `application-uat.properties` for testing.
+   ```properties
+   # Example: src/main/resources/application-uat.properties
+   jdbc.url=jdbc:postgresql://<neon-uat-db-host>:5432/neondb?sslmode=require
+   jdbc.user=your_uat_user
+   jdbc.pass=your_uat_password
+   ```
+   *To run using a specific environment locally, pass the Java system property:* `mvn clean compile exec:exec -Dapp.env=uat`
+   *(Note: These files are added to `.gitignore` to keep credentials safe).*
+
+2. **Production/Cloud (Environment Variables):** 
+   When deploying the `main` branch to a cloud provider (e.g., Render, AWS, Heroku), you **do not** need to upload a properties file. Instead, simply set system Environment Variables directly on your cloud dashboard:
+   * `JDBC_URL`
+   * `JDBC_USER`
+   * `JDBC_PASS`
+   
+   The Spring `Environment` will automatically detect these external environment variables and override the local properties using our built-in fallback logic.
+
+---
+
 ## 💡 Upcoming Features
 * **AI Message Parsing:** Integration with Spring AI to automatically decode incoming raw SMS text messages into structured `Expense` entities.
 * **iOS Shortcut Webhook:** A dedicated endpoint to receive push notifications directly from an iPhone.
