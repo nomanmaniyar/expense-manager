@@ -1,9 +1,0 @@
-com/expensemanager/config/WebMvcConfig.class
-com/expensemanager/config/WebAppInitializer.class
-com/expensemanager/controller/ExpenseController.class
-com/expensemanager/service/ExpenseService.class
-com/expensemanager/config/AppConfig.class
-com/expensemanager/model/Expense.class
-com/expensemanager/repository/ExpenseRepository.class
-com/expensemanager/config/JpaConfig.class
-com/expensemanager/AppRunner.class

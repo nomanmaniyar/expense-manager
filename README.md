@@ -48,6 +48,7 @@ Before running the application, make sure your PostgreSQL database credentials a
 
 ```properties
 # src/main/resources/application.properties
+server.port=8082
 jdbc.driverClassName=org.postgresql.Driver
 # Note: Ensure you include ?sslmode=require if connecting to Neon or AWS RDS
 jdbc.url=jdbc:postgresql://<your-db-host>:5432/<your_db_name>?sslmode=require
@@ -148,6 +149,26 @@ Deletes the specific expense associated with the provided UUID. Returns `204 No 
 
 ---
 
+## 🧪 Testing
+
+We use a modern testing stack to ensure API reliability. The application is tested with **JUnit 5 (Jupiter)** and **Spring Test (MockMvc)**, which allows us to test the REST controllers without starting a full embedded Tomcat server.
+
+We use **Mockito** to mock the database and service layers, enabling isolated and fast unit tests. We also use **JsonPath** and **Hamcrest** to elegantly assert the structure and values of our API JSON responses.
+
+### Test Environment Compatibility
+The codebase runs purely on a native **Java 17** environment. We explicitly rely on standard reflection testing paradigms supported seamlessly across `maven-surefire-plugin` & `maven-compiler-plugin`.
+
+### Running Tests
+You can execute the entire test suite via Maven:
+
+```bash
+mvn clean test
+```
+
+A successful build will output test statistics indicating how many tests ran, passed, and failed securely without booting the physical application.
+
+---
+
 ## 📂 Project Structure
 
 This project uses modern programmatic Java Configuration for Spring rather than XML files:
@@ -185,10 +206,13 @@ We have configured `JpaConfig.java` to support multiple environments natively in
    You can create environment-specific properties files. We use `application-dev.properties` for development and `application-uat.properties` for testing.
    ```properties
    # Example: src/main/resources/application-uat.properties
+   server.port=8084
    jdbc.url=jdbc:postgresql://<neon-uat-db-host>:5432/neondb?sslmode=require
    jdbc.user=your_uat_user
    jdbc.pass=your_uat_password
    ```
+   *By separating environments at the `server.port` level, you can run multiple environments simultaneously on a single development machine without address collision.*
+
    *To run using a specific environment locally, pass the Java system property:* `mvn clean compile exec:exec -Dapp.env=uat`
    *(Note: These files are added to `.gitignore` to keep credentials safe).*
 
