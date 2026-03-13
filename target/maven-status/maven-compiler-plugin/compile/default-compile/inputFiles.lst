@@ -1,0 +1,9 @@
+/Users/Shared/Projects/workspace/expense-manager/src/main/java/com/expensemanager/service/ExpenseService.java
+/Users/Shared/Projects/workspace/expense-manager/src/main/java/com/expensemanager/config/JpaConfig.java
+/Users/Shared/Projects/workspace/expense-manager/src/main/java/com/expensemanager/config/WebAppInitializer.java
+/Users/Shared/Projects/workspace/expense-manager/src/main/java/com/expensemanager/config/WebMvcConfig.java
+/Users/Shared/Projects/workspace/expense-manager/src/main/java/com/expensemanager/config/AppConfig.java
+/Users/Shared/Projects/workspace/expense-manager/src/main/java/com/expensemanager/repository/ExpenseRepository.java
+/Users/Shared/Projects/workspace/expense-manager/src/main/java/com/expensemanager/model/Expense.java
+/Users/Shared/Projects/workspace/expense-manager/src/main/java/com/expensemanager/AppRunner.java
+/Users/Shared/Projects/workspace/expense-manager/src/main/java/com/expensemanager/controller/ExpenseController.java
