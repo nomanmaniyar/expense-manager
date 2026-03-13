@@ -12,7 +12,34 @@ A backend service built with pure **Spring Framework 6** (No Spring Boot) to man
 
 ---
 
-## 🛠️ How to Run Locally
+## � Dependencies & Packages Used
+
+Since this project is built using pure **Spring Framework 6** (without Spring Boot auto-configuration), each package is explicitly chosen and configured. Here is the breakdown of the primary dependencies used in `pom.xml`:
+
+### Core Framework
+* **`spring-context`**: Provides the core Spring Inversion of Control (IoC) container and dependency injection architecture.
+* **`spring-webmvc`**: Enables REST API creation (`@RestController`, `@GetMapping`, etc.) and handles routing HTTP requests to the controller.
+* **`spring-aop`** & **`aspectjweaver`**: Spring Aspect-Oriented Programming and its execution weaver. These are critical for intercepting method calls and enabling "magic" annotations like `@Transactional` and Spring proxy registrations.
+
+### Database & ORM
+* **`spring-orm`**: Integrates Spring with the underlying JPA implementation and provides declarative transaction management (`@Transactional`).
+* **`spring-data-jpa`**: Provides the `JpaRepository` abstraction, greatly reducing boilerplate code for database CRUD operations.
+* **`jakarta.persistence-api`**: The standard Jakarta Persistence (JPA) specification interface. It defines standard annotations like `@Entity`, `@Id`, `@Column`, etc.
+* **`hibernate-core`**: The actual JPA provider (Object-Relational Mapper) that translates Java `Expense` entity objects into PostgreSQL queries and runs schema updates.
+* **`postgresql`**: The PostgreSQL JDBC driver required for our application to communicate with the Neon cloud database.
+* **`HikariCP`**: A lightweight and extremely fast database connection pool. It manages a pool of reusable database connections to prevent connection bottlenecks.
+
+### Web Server
+* **`tomcat-embed-core`**: The embedded Apache Tomcat server. Instead of building a WAR file and deploying it to an exterior server, we spin up Tomcat directly from our `main` method in `AppRunner.java`.
+* **`jakarta.servlet-api`**: The standard Java Servlet API required by Tomcat and Spring's `DispatcherServlet` to intercept and manage HTTP requests.
+
+### Data Binding & JSON
+* **`jackson-databind`**: Automatically serializes Java objects to JSON (for API responses) and deserializes JSON into Java objects (for API POST bodies).
+* **`jackson-datatype-jsr310`**: A Jackson extension module that natively handles modern Java 8 Date/Time objects (`LocalDate`, `LocalTime`), preventing dates from being serialized awkwardly as raw integer arrays.
+
+---
+
+## �🛠️ How to Run Locally
 
 ### 1. Database Configuration
 Before running the application, make sure your PostgreSQL database credentials are set. We use `src/main/resources/application.properties` for this.
